@@ -4,7 +4,6 @@
 import React, {useState} from 'react'
 
 function Greeting({initialname}) {
-  // 💣 delete this variable declaration and replace it with a React.useState call
   const [name, setName] = useState(initialname)
 
   function handleChange(event) {
@@ -23,7 +22,7 @@ function Greeting({initialname}) {
 }
 
 function App() {
-  return <Greeting initialname="" />
+  return <Greeting initialname="greak" />
 }
 
 export default App

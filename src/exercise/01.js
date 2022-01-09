@@ -15,7 +15,7 @@ function Greeting({initialname}) {
     <div>
       <form>
         <label htmlFor="name">Name: </label>
-        <input onChange={e => handleChange(e)} id="name" />
+        <input value={name} onChange={e => handleChange(e)} id="name" />
       </form>
       {name ? <strong>Hello {name}</strong> : 'Please type your name'}
     </div>
@@ -23,7 +23,7 @@ function Greeting({initialname}) {
 }
 
 function App() {
-  return <Greeting initialname="bakhtee" />
+  return <Greeting initialname="" />
 }
 
 export default App

@@ -3,18 +3,30 @@
 
 import * as React from 'react'
 
-function Greeting({initialName = ''}) {
-  // const getInitialNameValue = () => {
-  //   return window.localStorage.getItem('name') || initialName
-  // }
-
+function useSyncLocalStorageWithState(initialName) {
   const [name, setName] = React.useState(
     () => window.localStorage.getItem('name') || initialName, //if you just wanna send initialName just put it without arrow func
   )
 
   React.useEffect(() => {
     window.localStorage.setItem('name', name)
-  })
+  }, [name])
+
+  return [name, setName]
+}
+
+function Greeting({initialName = ''}) {
+  // const getInitialNameValue = () => {
+  //   return window.localStorage.getItem('name') || initialName
+  // }
+  const [name, setName] = useSyncLocalStorageWithState(initialName)
+  // const [name, setName] = React.useState(
+  //   () => window.localStorage.getItem('name') || initialName, //if you just wanna send initialName just put it without arrow func
+  // )
+
+  // React.useEffect(() => {
+  //   window.localStorage.setItem('name', name)
+  // }, [name]) // useEffect renders only if the name changes, this is an optimized version that keeps the useEffect from unintended renders
 
   function handleChange(event) {
     setName(event.target.value)

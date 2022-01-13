@@ -4,11 +4,13 @@
 import * as React from 'react'
 
 function Greeting({initialName = ''}) {
-  const getInitialNameValue = () => {
-    return window.localStorage.getItem('name') || initialName
-  }
+  // const getInitialNameValue = () => {
+  //   return window.localStorage.getItem('name') || initialName
+  // }
 
-  const [name, setName] = React.useState(getInitialNameValue)
+  const [name, setName] = React.useState(
+    () => window.localStorage.getItem('name') || initialName, //if you just wanna send initialName just put it without arrow func
+  )
 
   React.useEffect(() => {
     window.localStorage.setItem('name', name)

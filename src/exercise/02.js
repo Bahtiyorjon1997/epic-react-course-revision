@@ -3,13 +3,17 @@
 
 import * as React from 'react'
 
-function useSyncLocalStorageWithState(key, defaultState = '') {
-  const [state, setState] = React.useState(
-    () => window.localStorage.getItem(key) || defaultState, //if you just wanna send initialName just put it without arrow func
-  )
+function useSyncLocalStorageState(key, defaultState = '') {
+  const [state, setState] = React.useState(() => {
+    const valueInLocalStorage = window.localStorage.getItem(key) //if you just wanna send initialName just put it without arrow func
+    if (valueInLocalStorage) {
+      return JSON.parse(valueInLocalStorage)
+    }
+    return defaultState
+  })
 
   React.useEffect(() => {
-    window.localStorage.setItem(key, state)
+    window.localStorage.setItem(key, JSON.stringify(state))
   }, [key, state])
 
   return [state, setState]
@@ -19,7 +23,7 @@ function Greeting({initialName = ''}) {
   // const getInitialNameValue = () => {
   //   return window.localStorage.getItem('name') || initialName
   // }
-  const [name, setName] = useSyncLocalStorageWithState(initialName)
+  const [name, setName] = useSyncLocalStorageState(initialName)
   // const [name, setName] = React.useState(
   //   () => window.localStorage.getItem('name') || initialName, //if you just wanna send initialName just put it without arrow func
   // )
